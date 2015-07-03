@@ -20,7 +20,7 @@ namespace SampleModels
 
             foreach (var url in urls)
             {
-                await Observable.Timer(TimeSpan.FromMilliseconds(10));
+                await Observable.Timer(TimeSpan.FromSeconds(1));
 
                 try
                 {
