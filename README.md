@@ -31,6 +31,57 @@ IAsyncMethodBuilder などの実装はそれなりに大変で、自作はかな
 
 .NET Framework 3.5 上で、UniRx と一緒にこのライブラリを参照すれば、`IObservable<T>` に対して await できるようになる。
 
+↓これが動く。
+
+```cs
+using System;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
+using UniRx;
+
+namespace SampleModels
+{
+    public class Class1
+    {
+        public async Task RunAsync(IObserver<string> observer)
+        {
+            var urls = new[]
+            {
+                "http://yahoo.co.jp",
+                "http://google.co.jp",
+                "http://bing.co.jp",
+                "http://awsedrftgyhujikol.jp/",
+            };
+
+            foreach (var url in urls)
+            {
+                await Observable.Timer(TimeSpan.FromMilliseconds(10));
+
+                try
+                {
+                    var res = await GetAsStringAsync(url);
+                    observer.OnNext(res);
+                }
+                catch(Exception ex)
+                {
+                    observer.OnError(ex);
+                }
+            }
+        }
+
+        public async Task<string> GetAsStringAsync(string url)
+        {
+            var req = WebRequest.Create(url);
+            var res = await req.GetResponseAsObservable();
+
+            using (var sr = new StreamReader(res.GetResponseStream()))
+                return sr.ReadToEnd();
+        }
+    }
+}
+```
+
 ### 制限・注意事項
 
 このライブラリを .NET Framework 4 以上で参照すると、本家 `System.Threading.Tasks.Task` と衝突するので注意。
