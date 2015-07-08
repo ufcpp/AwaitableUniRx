@@ -2,6 +2,11 @@
 
 IAsyncMethodBuilder portability libarary on UniRx and Awaitable extensions for UniRx
 
+※ 別の方式に移行: https://github.com/ufcpp/MinimumAsyncBridge
+
+`TaskCompletionSource`の辺りだけ実装した最低ラインのasync/awaitバックポーティング実装を用意。
+その上に、[UniRx](https://github.com/neuecc/UniRx)とか[IteratorTasks](https://github.com/OrangeCube/IteratorTasks)とかの相互運用レイヤー(UniRx/IteratorTasksのawaiter実装と`Task`への変換)を用意。
+
 ## 概要
 
 [UniRx](https://github.com/neuecc/UniRx)  の IObservable に対して C# 5.0 の await 演算子を使えるようにするもの。
