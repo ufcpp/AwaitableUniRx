@@ -1,3 +1,6 @@
+This project was migrated to another approach: https://github.com/OrangeCube/MinimumAsyncBridge
+
+
 # AwaitableUniRx
 
 IAsyncMethodBuilder portability libarary on UniRx and Awaitable extensions for UniRx
